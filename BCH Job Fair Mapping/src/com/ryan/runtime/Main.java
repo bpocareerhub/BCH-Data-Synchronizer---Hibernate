@@ -1,6 +1,7 @@
 package com.ryan.runtime;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.ryan.bean.mappings.Person;
 import com.ryan.bean.mappings.User;
@@ -11,25 +12,28 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Session session = UserFactory.getSessionfactory().openSession();
-		session.beginTransaction();
 		
-		Person person = new Person();
-		person.setFirst_name("Joenna");
-		person.setLast_name("Bartolay");
-		person.setCreated_date(DateTime.getCurrentSQLDate());
-		person.setPhone_number("028745964");
-		person.setPerson_phone_created_date(DateTime.getCurrentSQLDate());
+		Transaction tx = session.beginTransaction();
 		
-		User user = new User();
+		for (int i = 0; i <= 100; i++) {
+			/*Person person = new Person();
+			person.setFirst_name("Joenna");
+			person.setLast_name("Bartolay");
+			person.setCreated_date(DateTime.getCurrentSQLDate());
+			person.setPhone_number("028745964");
+			person.setPerson_phone_created_date(DateTime.getCurrentSQLDate());*/
+			
 		
-		user.setEmail("jedai05@yahoo.com");
-		user.setUsername("ryanbartolay");
-		user.setUserPerson(person);
-		person.setUser(user);
-		user.setCreated_date(DateTime.getCurrentSQLDate());
+			User user = new User();
+			user.setEmail("jedai05@yahoo.com");
+			user.setUsername("ryanbartolay");
+			//user.setUserPerson(person);			
+			user.setCreated_date(DateTime.getCurrentSQLDate());
+			session.save(user);
+		}
 		
-		session.save(user);
-		session.getTransaction().commit();
-		session.close();
+		tx.commit();
+		session.flush();
+		//session.close();
 	}
 }

@@ -14,7 +14,7 @@
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.current_session_context_class">thread</property>
 		
-		<mapping class="com.ryan.beans.User"/>
-		<mapping class="com.ryan.beans.Person"/>
+		<mapping class="com.ryan.bean.mappings.User"/>
+		<mapping class="com.ryan.bean.mappings.Person"/>
 	</session-factory>
 </hibernate-configuration>
