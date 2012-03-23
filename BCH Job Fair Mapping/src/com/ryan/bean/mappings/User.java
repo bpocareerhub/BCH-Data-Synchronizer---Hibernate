@@ -18,7 +18,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue
-	@Column (name="user_id")
+	@Column (name="user_id", unique=true, nullable=false)	
 	private long user_id;
 	
 	@Column (name="grp_code")
@@ -60,6 +60,7 @@ public class User {
 	public User() {
 		super();
 	}
+	
 	public User(String username, String password) {
 		super();
 		this.username = username;
