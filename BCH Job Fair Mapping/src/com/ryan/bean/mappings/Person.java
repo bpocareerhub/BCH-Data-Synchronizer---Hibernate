@@ -6,15 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import com.ryan.bom.DateTime;
 
 @Entity
@@ -24,7 +19,6 @@ import com.ryan.bom.DateTime;
 @SecondaryTable (name="person_address", pkJoinColumns=@PrimaryKeyJoinColumn(name="person_id")),
 @SecondaryTable (name="person_details", pkJoinColumns=@PrimaryKeyJoinColumn(name="person_id"))
 })
-
 public class Person {
 	
 	@Id
@@ -70,10 +64,6 @@ public class Person {
 
 	@Column (name="job_alerts") 
 	private boolean job_alerts = false;
-	
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private User user;
 	
 	@Column (table="person_phone", name="phone_num")
 	private String phone_number;
@@ -271,14 +261,6 @@ public class Person {
 
 	public void setModified_date(Date modified_date) {
 		this.modified_date = modified_date;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public long getPerson_id() {
