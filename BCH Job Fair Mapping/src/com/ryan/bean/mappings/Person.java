@@ -6,29 +6,35 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
+import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.ryan.bom.DateTime;
+
 @Entity
 @Table (name="person")
-@SecondaryTable (name="person_phone", pkJoinColumns=@PrimaryKeyJoinColumn(name="person_id"))
+@SecondaryTables({
+@SecondaryTable (name="person_phone", pkJoinColumns=@PrimaryKeyJoinColumn(name="person_id")),
+@SecondaryTable (name="person_address", pkJoinColumns=@PrimaryKeyJoinColumn(name="person_id")),
+@SecondaryTable (name="person_details", pkJoinColumns=@PrimaryKeyJoinColumn(name="person_id"))
+})
+
 public class Person {
 	
-	@Column(name="user_id", unique=true, nullable=false)
-	@GeneratedValue(generator="gen")
-	@GenericGenerator(name="gen", strategy="foreign", parameters=@Parameter(name="property", value="user"))
-	private long user_id;
-	
 	@Id
+	@GeneratedValue
 	@Column (name="person_id", unique=true, nullable=false)	
 	private long person_id;
 
+	@Column(name="user_id")
+	private long user_id;
+	
 	@Column (name="first_name")
 	private String first_name;
 	
@@ -36,7 +42,7 @@ public class Person {
 	private String last_name;
 
 	@Column (name="created_date")
-	private Date created_date;
+	private Date created_date = DateTime.getCurrentSQLDate();
 	
 	@Column (name="shifting_schedules")
 	private boolean shifting_schedules;
@@ -81,6 +87,48 @@ public class Person {
 	@Column (table="person_phone", name="modified_date")
 	private Date modified_date;
 	
+	@Column (table="person_address", name="address")
+	private String address;
+	
+	@Column (table="person_address", name="country_code")
+	private String country_code;
+	
+	@Column (table="person_address", name="region_city_code")
+	private String region_city_code;
+	
+	@Column (table="person_address", name="created_date")
+	private Date address_created_date = DateTime.getCurrentSQLDate();
+	
+	@Column (table="person_details", name="gender_code")
+	private String gender_code;
+	
+	@Column (table="person_details", name="hide_gender")
+	private boolean hide_gender = false;
+	
+	@Column (table="person_details", name="birth_date")
+	private Date birth_date;
+	
+	@Column (table="person_details", name="hide_birth_date")
+	private boolean hide_birth_date = false;
+	
+	@Column (table="person_details", name="natl_code")
+	private String natl_code;
+	
+	@Column (table="person_details", name="marital_stat_code")
+	private String marital_stat_code;
+	
+	@Column (table="person_details", name="created_date")
+	private Date details_created_date = DateTime.getCurrentSQLDate();
+	
+	@Column (table="person_details", name="private")
+	private boolean details_private = false; 
+	
+	@Column (table="person_details", name="send_message")
+	private boolean send_message = false;
+	
+	@Column (table="person_details", name="send_email_weekly")
+	private boolean send_email_weekly = false;
+	
 	public Date getPerson_phone_created_date() {
 		return person_phone_created_date;
 	}
@@ -103,6 +151,118 @@ public class Person {
 
 	public void setMobile_number(String mobile_number) {
 		this.mobile_number = mobile_number;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCountry_code() {
+		return country_code;
+	}
+
+	public void setCountry_code(String country_code) {
+		this.country_code = country_code;
+	}
+	
+	public String getRegion_city_code() {
+		return region_city_code;
+	}
+
+	public void setRegion_city_code(String region_city_code) {
+		this.region_city_code = region_city_code;
+	}
+	
+	public Date getAddress_created_date() {
+		return address_created_date;
+	}
+
+	public void setAddress_created_date(Date address_created_date) {
+		this.address_created_date = address_created_date;
+	}
+
+	public String getGender_code() {
+		return gender_code;
+	}
+
+	public void setGender_code(String gender_code) {
+		this.gender_code = gender_code;
+	}
+
+	public Date getBirth_date() {
+		return birth_date;
+	}
+
+	public void setBirth_date(Date birth_date) {
+		this.birth_date = birth_date;
+	}
+
+	public String getNatl_code() {
+		return natl_code;
+	}
+
+	public void setNatl_code(String natl_code) {
+		this.natl_code = natl_code;
+	}
+
+	public String getMarital_stat_code() {
+		return marital_stat_code;
+	}
+
+	public void setMarital_stat_code(String marital_stat_code) {
+		this.marital_stat_code = marital_stat_code;
+	}
+	
+	public Date getDetails_created_date() {
+		return details_created_date;
+	}
+
+	public void setDetails_created_date(Date details_created_date) {
+		this.details_created_date = details_created_date;
+	}
+
+	public boolean isHide_gender() {
+		return hide_gender;
+	}
+
+	public void setHide_gender(boolean hide_gender) {
+		this.hide_gender = hide_gender;
+	}
+
+	public boolean isHide_birth_date() {
+		return hide_birth_date;
+	}
+
+	public void setHide_birth_date(boolean hide_birth_date) {
+		this.hide_birth_date = hide_birth_date;
+	}
+
+	public boolean isDetails_private() {
+		return details_private;
+	}
+
+	public void setDetails_private(boolean details_private) {
+		this.details_private = details_private;
+	}
+
+	public boolean isSend_message() {
+		return send_message;
+	}
+
+	public void setSend_message(boolean send_message) {
+		this.send_message = send_message;
+	}
+
+	public boolean isSend_email_weekly() {
+		return send_email_weekly;
+	}
+
+	public void setSend_email_weekly(boolean send_email_weekly) {
+		this.send_email_weekly = send_email_weekly;
 	}
 
 	public Date getModified_date() {

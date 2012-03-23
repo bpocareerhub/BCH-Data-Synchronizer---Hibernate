@@ -54,9 +54,6 @@ public class User {
 	@Column (name="activated")
 	private boolean activated = false;
 	
-	@OneToOne (mappedBy="user", cascade = CascadeType.ALL)
-	private Person userPerson;
-	
 	public User() {
 		super();
 	}
@@ -131,12 +128,6 @@ public class User {
 	}
 	public void setLast_login(Date last_login) {
 		this.last_login = last_login;
-	}
-	public Person getUserPerson() {
-		return userPerson;
-	}
-	public void setUserPerson(Person userPerson) {
-		this.userPerson = userPerson;
 	}
 	public boolean isActivated() {
 		return activated;
