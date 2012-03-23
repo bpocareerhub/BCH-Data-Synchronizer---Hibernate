@@ -1,0 +1,2 @@
+# this is the main data synchronizer in pushing data coming from other resource
+# main example for this implementation is when we are integrating the hybrid database to the live database
