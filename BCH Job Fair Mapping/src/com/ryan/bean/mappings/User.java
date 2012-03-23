@@ -1,4 +1,4 @@
-package com.ryan.beans;
+package com.ryan.bean.mappings;
 
 import java.util.Date;
 

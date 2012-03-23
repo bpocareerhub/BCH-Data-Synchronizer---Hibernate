@@ -2,8 +2,8 @@ package com.ryan.runtime;
 
 import org.hibernate.Session;
 
-import com.ryan.beans.Person;
-import com.ryan.beans.User;
+import com.ryan.bean.mappings.Person;
+import com.ryan.bean.mappings.User;
 import com.ryan.bom.DateTime;
 import com.ryan.bom.UserFactory;
 
