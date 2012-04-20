@@ -1,20 +1,17 @@
 package com.bch.bean.mappings;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.bch.bom.DateTime;
 
@@ -31,11 +28,10 @@ public class User {
 	@Column (name="user_id", unique=true, updatable=false, insertable=false)
 	private long user_id;
 	
-	
 	@Column (name="group_id")
 	private int group_id;
 	
-	@Column (name="parent_user_id")
+	@Column (name="parent_user_id")	
 	private int parent_user_id;
 	
 	@Column (name="account_type_id")
@@ -47,9 +43,11 @@ public class User {
 	@Column (name="password")
 	private String password = "";
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="date_created")
 	private Date date_created = DateTime.getCurrentSQLDate();
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="date_last_login")
 	private Date date_last_login;
 	
@@ -59,6 +57,7 @@ public class User {
 	@Column (name="activated")
 	private boolean activated = false;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="date_activated", nullable=true)
 	private Date date_activated;
 	
@@ -149,12 +148,9 @@ public class User {
 	@Column (table="user_profile_detail", name="languages")
 	private String languages = "";
 	
-	@OneToMany (fetch=FetchType.LAZY, mappedBy="workExperience")
-	private Set<UserWorkExperiences> workExperiences = new HashSet<UserWorkExperiences>();
+//	@OneToMany (fetch=FetchType.LAZY, mappedBy="workExperience")
+//	private Set<UserWorkExperiences> workExperiences = new HashSet<UserWorkExperiences>();
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Employer employer;
 	
 	public long getUser_id() {
 		return user_id;
@@ -398,18 +394,6 @@ public class User {
 	}
 	public void setLanguages(String languages) {
 		this.languages = languages;
-	}
-	public Set<UserWorkExperiences> getWorkExperiences() {
-		return workExperiences;
-	}
-	public void setWorkExperiences(Set<UserWorkExperiences> workExperiences) {
-		this.workExperiences = workExperiences;
-	}
-	public Employer getEmployer() {
-		return employer;
-	}
-	public void setEmployer(Employer employer) {
-		this.employer = employer;
 	}
 	@Override
 	public int hashCode() {

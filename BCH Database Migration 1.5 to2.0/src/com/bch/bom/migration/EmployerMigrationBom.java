@@ -5,18 +5,21 @@ import java.util.Iterator;
 
 import com.bch.bean.mappings.Employer;
 import com.bch.bean.mappings.User;
-import com.bch.bom.UserUtility;
 import com.ryan.old.dao.CompaniesDao;
+import com.ryan.old.dao.IndustriesDao;
 import com.ryan.old.dao.SecurityUsersDao;
 import com.ryan.old.models.Companies;
 import com.ryan.old.models.SecurityUsers;
 
 public class EmployerMigrationBom {
+	
 	public ArrayList<Employer> buildEmployers() {
+		
 		ArrayList<Companies> companies = this.getAllEmployers();
 		ArrayList<SecurityUsers> employerStaff = this.getAllEmployerStaff();
-		
 		ArrayList<Employer> employers = new ArrayList<Employer>();
+		
+		IndustriesDao iDao = new IndustriesDao();
 		
 		for(Iterator<Companies> i = companies.iterator(); i.hasNext();) {
 			Companies company = i.next();
@@ -26,8 +29,8 @@ public class EmployerMigrationBom {
 			employer.setDescription(company.getCmpny_desc());
 			employer.setTin_number(company.getTin_num());
 			employer.setSec_number(company.getSec_num());
-			//employer.setIndustry_id(company.getIndstry_sctr_code());
-			//employer.setIndustry_sector_id(company.getIndstry_sctr_code());
+			employer.setIndustry_id(iDao.getIndustryByIndustryCode(company.getIndstry_sctr_code()));
+			employer.setIndustry_sector_id(iDao.getSectorIdBySectorCode(company.getIndstry_sctr_code()));
 			employer.setCountry_code(company.getCountry_code());
 			employer.setOffice_phone_number(company.getPhone());
 			employer.setFax_number(company.getFax());
@@ -47,7 +50,8 @@ public class EmployerMigrationBom {
 				user.setEmail(su.getEmail());
 				user.setPassword(su.getPassword());
 				user.setDate_created(su.getCreated_date());
-				user.setGroup_id(UserUtility.groupCode(su.getGrp_code()));
+				user.setGroup_id(3);
+				user.setAccount_type_id(1);
 				user.setDate_last_login(su.getLast_login());
 				user.setActivation_code(su.getActivation_code());
 				user.setActivated(su.isActivated());
@@ -69,7 +73,6 @@ public class EmployerMigrationBom {
 				user.setAddress_country_code(su.getCountry_code());
 				user.setMarital_status_code(su.getMarital_stat_code());
 			}
-			
 			
 			employer.setUser(user);
 			employers.add(employer);

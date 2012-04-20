@@ -2,11 +2,16 @@ package com.ryan.old.models;
 
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 public class Companies {
 	
 	private long cmpny_id;
 	private long user_id;
 	private String cmpny_name, cmpny_desc, logo, tin_num, sec_num, indstry_sctr_code, website;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date created_date, modified_date;
 	private boolean autosend_news, allow_social_site;
 	private long post_credits;

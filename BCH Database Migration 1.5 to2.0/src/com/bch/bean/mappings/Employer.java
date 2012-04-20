@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table (name="employers")
@@ -19,7 +22,8 @@ public class Employer {
 	@Column (name="employer_id", unique=true, nullable=false, updatable=false)
 	private long employer_id;
 	
-	@OneToOne (mappedBy="account_owner", cascade=CascadeType.ALL)
+	@OneToOne (mappedBy="employer", cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private User user;
 	
 	@Column (name="name")
@@ -38,10 +42,10 @@ public class Employer {
 	private int account_owner_user_id;
 	
 	@Column (name="industry_id")
-	private int industry_id;
+	private long industry_id;
 	
 	@Column (name="industry_sector_id")
-	private int industry_sector_id;
+	private long industry_sector_id;
 	
 	@Column (name="country_code")
 	private String country_code;
@@ -58,10 +62,12 @@ public class Employer {
 	@Column (name="profile_picture")
 	private String profile_picture;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="date_created")
 	private Date date_created;
 	
-	@Column (name="date_modified")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column (name="date_modified", nullable=true)
 	private Date date_modified;
 	
 	@Column (name="active")
@@ -115,16 +121,16 @@ public class Employer {
 	public void setAccount_owner_user_id(int account_owner_user_id) {
 		this.account_owner_user_id = account_owner_user_id;
 	}
-	public int getIndustry_id() {
+	public long getIndustry_id() {
 		return industry_id;
 	}
-	public void setIndustry_id(int industry_id) {
+	public void setIndustry_id(long industry_id) {
 		this.industry_id = industry_id;
 	}
-	public int getIndustry_sector_id() {
+	public long getIndustry_sector_id() {
 		return industry_sector_id;
 	}
-	public void setIndustry_sector_id(int industry_sector_id) {
+	public void setIndustry_sector_id(long industry_sector_id) {
 		this.industry_sector_id = industry_sector_id;
 	}
 	public String getCountry_code() {
@@ -200,5 +206,19 @@ public class Employer {
 		if (employer_id != other.employer_id)
 			return false;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "Employer [employer_id=" + employer_id + ", user=" + user
+				+ ", name=" + name + ", description=" + description
+				+ ", tin_number=" + tin_number + ", sec_number=" + sec_number
+				+ ", account_owner_user_id=" + account_owner_user_id
+				+ ", industry_id=" + industry_id + ", industry_sector_id="
+				+ industry_sector_id + ", country_code=" + country_code
+				+ ", office_phone_number=" + office_phone_number
+				+ ", fax_number=" + fax_number + ", url_website=" + url_website
+				+ ", profile_picture=" + profile_picture + ", date_created="
+				+ date_created + ", date_modified=" + date_modified
+				+ ", active=" + active + ", flag=" + flag + "]";
 	}
 }

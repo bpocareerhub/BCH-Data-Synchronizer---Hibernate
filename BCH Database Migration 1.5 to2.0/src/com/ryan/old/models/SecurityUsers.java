@@ -2,10 +2,28 @@ package com.ryan.old.models;
 
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 public class SecurityUsers {
 	private long user_id;
 	private String grp_code, username, password, email, activation_code, ref_code;
-	private Date created_date, modified_date, last_update_date, last_login, activation_date;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date created_date;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modified_date; 
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date last_update_date;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date last_login;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date activation_date;
+	
 	private boolean inactive, activated, invalid_email, new_password_flg;
 	private String src_code, src_specific;
 	
@@ -40,7 +58,11 @@ public class SecurityUsers {
 	 * Applicant_resume
 	 */
 	private String resume_file = "";
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date resume_created_date;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date resume_modified_date;
 	
 	/**

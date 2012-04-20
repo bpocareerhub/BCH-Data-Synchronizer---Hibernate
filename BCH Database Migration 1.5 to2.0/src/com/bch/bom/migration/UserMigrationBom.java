@@ -4,16 +4,58 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.bch.bean.mappings.User;
-import com.bch.bom.UserUtility;
 import com.ryan.old.dao.ApplicantProfessionalBackgroundDao;
 import com.ryan.old.dao.ApplicantResumeDao;
 import com.ryan.old.dao.SecurityUsersDao;
 import com.ryan.old.models.ApplicantProfessionalBackground;
 import com.ryan.old.models.ApplicantResume;
+import com.ryan.old.models.Companies;
 import com.ryan.old.models.SecurityUsers;
 
 public class UserMigrationBom {
 
+	public ArrayList<User> buildEmployerStaff() {
+		ArrayList<SecurityUsers> susers = this.getAllEmployerStaff(); 
+		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<Companies> employer = new EmployerMigrationBom().getAllEmployers();
+			
+		for(Iterator<SecurityUsers> i = susers.iterator(); i.hasNext();) {
+			
+			SecurityUsers su = i.next();
+			User user = new User();
+			
+			// user
+			user.setEmail(su.getEmail());
+			user.setPassword(su.getPassword());
+			user.setDate_created(su.getCreated_date());
+			user.setGroup_id(3);
+			user.setAccount_type_id(1);
+			user.setDate_last_login(su.getLast_login());
+			user.setActivation_code(su.getActivation_code());
+			user.setActivated(su.isActivated());
+			user.setDate_activated(su.getActivation_date());
+
+			// user_profile
+			user.setFirstname(su.getFirst_name());
+			user.setMiddlename(su.getMiddle_name());
+			user.setLastname(su.getLast_name());
+			user.setDate_of_birth(su.getBirth_date());
+			user.setDate_modified(su.getModified_date());
+			user.setGender_code(su.getGender_code());
+			user.setProfile_picture(su.getProfile_picture());
+			user.setNationality_code(su.getNatl_code());
+			user.setPhone_number(su.getPhone_num());
+			user.setMobile_number(su.getMobile_num());
+			user.setAddress_details(su.getAddress());
+			user.setAddress_region_code(su.getRegion_city_code());
+			user.setAddress_country_code(su.getCountry_code());
+			user.setMarital_status_code(su.getMarital_stat_code());
+			users.add(user);
+		}
+			
+		return users;
+	}
+	
 	public ArrayList<User> buildCareerSeekers() {
 
 		ArrayList<SecurityUsers> security_users = this.getApplicants();
@@ -29,7 +71,7 @@ public class UserMigrationBom {
 			user.setEmail(su.getEmail());
 			user.setPassword(su.getPassword());
 			user.setDate_created(su.getCreated_date());
-			user.setGroup_id(UserUtility.groupCode(su.getGrp_code()));
+			user.setGroup_id(2);
 			user.setDate_last_login(su.getLast_login());
 			user.setActivation_code(su.getActivation_code());
 			user.setActivated(su.isActivated());
@@ -83,6 +125,11 @@ public class UserMigrationBom {
 	private ArrayList<ApplicantResume> getApplicantResumes() {
 		ApplicantResumeDao arDao = new ApplicantResumeDao();
 		return arDao.retrieveAll();
+	}
+	
+	public ArrayList<SecurityUsers> getAllEmployerStaff() {
+		SecurityUsersDao suDao = new SecurityUsersDao();		
+		return suDao.retrieveAllEmployerStaff();
 	}
 	
 	private ArrayList<ApplicantProfessionalBackground> getProfessionalBackgrounds() {
